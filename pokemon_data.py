@@ -1039,8 +1039,8 @@ POKEMON_DATA = {
 }
 
 def get_pokemon_sprite_url(pokemon_id):
-    """Get sprite URL from GitHub official artwork"""
-    return f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{pokemon_id}.png"
+    """Get sprite URL from GitHub - using home artwork for higher quality"""
+    return f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/{pokemon_id}.png"
 
 def get_pokemon_info_local(name):
     """Get Pokemon info from local database"""
