@@ -514,6 +514,100 @@
             }
         };
 
+        // Value-level translations used inside the result table
+        const typeTranslations = {
+            fr: {
+                bug: 'Insecte',
+                dark: 'Ténèbres',
+                dragon: 'Dragon',
+                electric: 'Électrik',
+                fairy: 'Fée',
+                fighting: 'Combat',
+                fire: 'Feu',
+                flying: 'Vol',
+                ghost: 'Spectre',
+                grass: 'Plante',
+                ground: 'Sol',
+                ice: 'Glace',
+                normal: 'Normal',
+                poison: 'Poison',
+                psychic: 'Psy',
+                rock: 'Roche',
+                steel: 'Acier',
+                water: 'Eau'
+            }
+        };
+
+        const heightTranslations = {
+            '↑ Taller': '↑ Plus grand',
+            '↓ Shorter': '↓ Plus petit',
+            '✓': '✓'
+        };
+
+        const weightTranslations = {
+            '↑ Heavier': '↑ Plus lourd',
+            '↓ Lighter': '↓ Plus léger',
+            '✓': '✓'
+        };
+
+        function translateGeneration(value) {
+            if (currentLanguage !== 'fr') return value;
+            const match = value && value.match(/gen\s*(\d+)/i);
+            return match ? `Gén. ${match[1]}` : value;
+        }
+
+        function translateType(value) {
+            if (currentLanguage !== 'fr') return value;
+            if (!value) return value;
+            const normalized = value.toString().trim().toLowerCase();
+            return typeTranslations.fr[normalized] || value;
+        }
+
+        function translateHeight(value) {
+            if (currentLanguage !== 'fr') return value;
+            if (!value) return value;
+            const trimmed = value.toString().trim();
+            if (trimmed.includes('Taller')) return '↑ Plus grand';
+            if (trimmed.includes('Shorter')) return '↓ Plus petit';
+            return heightTranslations[trimmed] || trimmed;
+        }
+
+        function translateWeight(value) {
+            if (currentLanguage !== 'fr') return value;
+            if (!value) return value;
+            const trimmed = value.toString().trim();
+            if (trimmed.includes('Heavier')) return '↑ Plus lourd';
+            if (trimmed.includes('Lighter')) return '↓ Plus léger';
+            return weightTranslations[trimmed] || trimmed;
+        }
+
+        function applyTranslationsToExistingRows() {
+            document.querySelectorAll('#guessesTable tr').forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 6) return;
+
+                const englishName = row.dataset.englishName;
+                const generation = row.dataset.generation;
+                const type1 = row.dataset.type1;
+                const type2 = row.dataset.type2;
+                const height = row.dataset.height;
+                const weight = row.dataset.weight;
+
+                const displayName = getPokemonName(englishName);
+                const sprite = row.querySelector('.guess-sprite');
+                const nameEl = row.querySelector('.guess-name');
+
+                if (sprite) sprite.alt = displayName;
+                if (nameEl) nameEl.textContent = displayName;
+
+                cells[1].textContent = translateGeneration(generation);
+                cells[2].textContent = translateType(type1);
+                cells[3].textContent = type2 === '—' ? '—' : translateType(type2);
+                cells[4].textContent = translateHeight(height);
+                cells[5].textContent = translateWeight(weight);
+            });
+        }
+
         // Function to get Pokemon name in current language
         function getPokemonName(englishName) {
             if (currentLanguage === 'fr' && pokemonFrenchNames[englishName]) {
@@ -574,6 +668,9 @@
             document.querySelectorAll('.language-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
+
+            applyTranslationsToExistingRows();
+            updateStats();
         }
 
         // Initialize language on page load
@@ -705,6 +802,11 @@
                 const row = document.createElement('tr');
                 row.className = 'guess-row';
                 const displayName = getPokemonName(result.name);
+                const generationValue = translateGeneration(result.generation.value);
+                const type1Value = translateType(result.type1.value);
+                const type2Value = result.type2.value === '—' ? '—' : translateType(result.type2.value);
+                const heightValue = translateHeight(result.height.value);
+                const weightValue = translateWeight(result.weight.value);
                 row.innerHTML = `
                     <td class="sprite-cell">
                         <div class="guess-sprite-container">
@@ -713,23 +815,33 @@
                         </div>
                     </td>
                     <td class="${result.generation.match ? 'correct' : 'incorrect'}">
-                        ${result.generation.value}
+                            ${generationValue}
                     </td>
                     <td class="${result.type1.match ? 'correct' : 'incorrect'}">
-                        ${result.type1.value}
+                            ${type1Value}
                     </td>
                     <td class="${result.type2.match ? 'correct' : 'incorrect'}">
-                        ${result.type2.value || '—'}
+                            ${type2Value || '—'}
                     </td>
                     <td class="${result.height.match ? 'correct' : 'incorrect'}">
-                        ${result.height.value}
+                            ${heightValue}
                     </td>
                     <td class="${result.weight.match ? 'correct' : 'incorrect'}">
-                        ${result.weight.value}
+                            ${weightValue}
                     </td>
                 `;
+
+                row.dataset.englishName = result.name;
+                row.dataset.generation = result.generation.value;
+                row.dataset.type1 = result.type1.value;
+                row.dataset.type2 = result.type2.value;
+                row.dataset.height = result.height.value;
+                row.dataset.weight = result.weight.value;
                 guessesTable.insertBefore(row, guessesTable.firstChild);
                 guesses.push(guess);
+
+                // Ensure newly added rows reflect current language immediately
+                applyTranslationsToExistingRows();
 
                 if (result.correct) {
                     gameWon = true;
