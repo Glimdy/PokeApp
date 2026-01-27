@@ -3,6 +3,7 @@ import json
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import os
 import sys
+import unicodedata
 
 # Import pokemon data
 sys.path.insert(0, os.path.dirname(__file__))
@@ -10,6 +11,13 @@ from pokemon_data import POKEMON_DATA, get_pokemon_info_local
 
 # Global game state
 current_game_pokemon = None
+
+def remove_accents(text):
+    """Remove accents from text for flexible matching (e.g., électhor -> electhor)"""
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', text)
+        if unicodedata.category(c) != 'Mn'
+    )
 
 class PokemonHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -182,10 +190,11 @@ class PokemonHandler(BaseHTTPRequestHandler):
                 self.send_error_response('Please enter a Pokemon name')
                 return
             
-            # Check if pokemon exists (case-insensitive)
+            # Check if pokemon exists (case-insensitive and accent-insensitive)
+            guess_normalized = remove_accents(guess.lower())
             guess_pokemon = None
             for name in POKEMON_DATA.keys():
-                if name.lower() == guess.lower():
+                if remove_accents(name.lower()) == guess_normalized:
                     guess_pokemon = name
                     break
             
