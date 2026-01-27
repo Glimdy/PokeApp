@@ -549,6 +549,11 @@
             '✓': '✓'
         };
 
+        // Remove accents from text for flexible matching (e.g., électhor -> electhor)
+        function removeAccents(text) {
+            return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
         const weightTranslations = {
             '↑ Heavier': '↑ Plus lourd',
             '↓ Lighter': '↓ Plus léger',
@@ -784,9 +789,12 @@
                 return;
             }
 
+            const valueNormalized = removeAccents(value);
             const matches = allPokemon.filter(p => {
                 const displayName = getPokemonName(p.name).toLowerCase();
-                return displayName.startsWith(value) || p.name.toLowerCase().startsWith(value);
+                const displayNameNormalized = removeAccents(displayName);
+                const nameNormalized = removeAccents(p.name.toLowerCase());
+                return displayNameNormalized.startsWith(valueNormalized) || nameNormalized.startsWith(valueNormalized);
             }).slice(0, 5);
 
             renderAutocomplete(matches);
