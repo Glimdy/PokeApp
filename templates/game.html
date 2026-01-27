@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <script src="/pokemon_fr_names.js"></script>
+    <title>Pokédl - Pokémon Guess Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            min-height: 100vh;
+            color: #00a8ff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 8px;
+            background: rgba(42, 42, 42, 0.95);
+            border-radius: 8px;
+            padding: 8px;
+            border: 1px solid rgba(0, 168, 255, 0.2);
+        }
+
+        .language-btn {
+            padding: 8px 16px;
+            background: transparent;
+            color: #888;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .language-btn:hover {
+            color: #00a8ff;
+            background: rgba(0, 168, 255, 0.1);
+        }
+
+        .language-btn.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00a8ff 0%, #0066cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header h1 img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .game-board {
+            background: rgba(42, 42, 42, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .guess-input-container {
+            position: relative;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .guess-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(42, 42, 42, 0.8);
+            border: 2px solid rgba(0, 168, 255, 0.2);
+            border-radius: 8px;
+            color: #00a8ff;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .guess-input:focus {
+            outline: none;
+            border-color: #00a8ff;
+            background: rgba(42, 42, 42, 1);
+            box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.1);
+        }
+
+        .submit-btn-inline {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .submit-btn-inline:hover {
+            background: linear-gradient(135deg, #0088ff 0%, #00a8ff 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.3);
+        }
+
+        .submit-btn-inline:active {
+            transform: translateY(0);
+        }
+
+        .autocomplete-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: rgba(42, 42, 42, 0.98);
+            border: 1px solid #00a8ff;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 168, 255, 0.2);
+        }
+
+        .autocomplete-menu.show {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-bottom: 1px solid rgba(0, 168, 255, 0.1);
+        }
+
+        .autocomplete-item:hover {
+            background: rgba(0, 168, 255, 0.1);
+        }
+
+        .autocomplete-item img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .autocomplete-item span {
+            color: #00a8ff;
+        }
+
+        .comparison-table {
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(0, 168, 255, 0.1);
+            color: #00a8ff;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            color: #00a8ff;
+        }
+
+        .sprite-cell {
+            padding: 8px;
+            background: rgba(42, 42, 42, 0.5);
+        }
+
+        .guess-sprite-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .guess-sprite {
+            width: 60px;
+            height: 60px;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .guess-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #00a8ff;
+            text-align: center;
+            max-width: 70px;
+            word-break: break-word;
+        }
+
+        .correct {
+            background: rgba(34, 177, 76, 0.2);
+            color: #22b14c;
+            font-weight: 600;
+        }
+
+        .incorrect {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .partial {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .guess-row {
+            opacity: 0;
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-message {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .result-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .result-message.success {
+            background: rgba(34, 177, 76, 0.2);
+            border: 2px solid #22b14c;
+            color: #22b14c;
+        }
+
+        .result-message.error {
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .success-content {
+            text-align: center;
+        }
+
+        .success-sprite {
+            margin: 20px 0;
+        }
+
+        .success-sprite img {
+            width: 150px;
+            height: 150px;
+            image-rendering: pixelated;
+        }
+
+        .success-info {
+            margin: 10px 0;
+        }
+
+        .success-info h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .success-info p {
+            font-size: 14px;
+            color: #22b14c;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: rgba(0, 168, 255, 0.2);
+            color: #00a8ff;
+            border: 1px solid rgba(0, 168, 255, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 168, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 168, 255, 0.2);
+        }
+
+        .stats {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #00a8ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-link a:hover {
+            color: #0066cc;
+            text-decoration: underline;
+        }
+
+        .scroll-hint {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="language-toggle">
+            <button class="language-btn active" data-lang="en">EN</button>
+            <button class="language-btn" data-lang="fr">FR</button>
+        </div>
+        <div class="header">
+            <h1><img src="/favicon.png" alt="Pokeball"><span data-translate="title">Pokédl</span></h1>
+            <p data-translate="subtitle">Guess the Pokémon based on its attributes!</p>
+        </div>
+
+        <div class="game-board">
+            <div class="guess-input-container">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        class="guess-input" 
+                        id="guessInput" 
+                        data-placeholder-en="Type a Pokémon name..."
+                        data-placeholder-fr="Tapez le nom d'un Pokémon..."
+                        placeholder="Type a Pokémon name..."
+                        autocomplete="off"
+                    >
+                    <div class="autocomplete-menu" id="autocompleteMenu"></div>
+                </div>
+                <button class="submit-btn-inline" id="submitBtn" data-translate="submitBtn">Submit Guess</button>
+            </div>
+
+            <div class="result-message" id="resultMessage"></div>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-translate="thSprite">Sprite</th>
+                            <th data-translate="thGeneration">Generation</th>
+                            <th data-translate="thType1">Type 1</th>
+                            <th data-translate="thType2">Type 2</th>
+                            <th data-translate="thHeight">Height</th>
+                            <th data-translate="thWeight">Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody id="guessesTable">
+                    </tbody>
+                </table>
+                <div class="scroll-hint" id="scrollHint"></div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" id="nextBtn" style="display: none;" data-translate="nextBtn">Next Pokémon</button>
+                <button class="btn btn-secondary" id="giveUpBtn" data-translate="giveUpBtn">Give Up</button>
+            </div>
+
+            <div class="stats" id="stats"></div>
+        </div>
+
+        <div class="back-link">
+            <a href="/" data-translate="backLink">← Back to Generator</a>
+        </div>
+    </div>
+
+    <script>
+        // Translation dictionaries
+        const translations = {
+            en: {
+                title: 'Pokédl',
+                subtitle: 'Guess the Pokémon based on its attributes!',
+                submitBtn: 'Submit Guess',
+                nextBtn: 'Next Pokémon',
+                giveUpBtn: 'Give Up',
+                backLink: '← Back to Generator',
+                thSprite: 'Sprite',
+                thGeneration: 'Generation',
+                thType1: 'Type 1',
+                thType2: 'Type 2',
+                thHeight: 'Height',
+                thWeight: 'Weight',
+                correct: 'Correct! The Pokémon was',
+                gaveUp: 'The Pokémon was',
+                guesses: 'guesses',
+                notValid: 'is not a valid Pokemon',
+                enterName: 'Please enter a Pokemon name'
+            },
+            fr: {
+                title: 'Pokédl',
+                subtitle: 'Devinez le Pokémon selon ses attributs !',
+                submitBtn: 'Soumettre',
+                nextBtn: 'Pokémon Suivant',
+                giveUpBtn: 'Abandonner',
+                backLink: '← Retour au Générateur',
+                thSprite: 'Sprite',
+                thGeneration: 'Génération',
+                thType1: 'Type 1',
+                thType2: 'Type 2',
+                thHeight: 'Taille',
+                thWeight: 'Poids',
+                correct: 'Correct ! Le Pokémon était',
+                gaveUp: 'Le Pokémon était',
+                guesses: 'tentatives',
+                notValid: "n'est pas un Pokémon valide",
+                enterName: 'Veuillez entrer le nom d\'un Pokémon'
+            }
+        };
+
+        // Function to get Pokemon name in current language
+        function getPokemonName(englishName) {
+            if (currentLanguage === 'fr' && pokemonFrenchNames[englishName]) {
+                return pokemonFrenchNames[englishName];
+            }
+            return englishName;
+        }
+
+        // Function to get English name from French name
+        function getEnglishName(name) {
+            if (currentLanguage === 'fr') {
+                // Search for the English key that has this French value
+                for (const [english, french] of Object.entries(pokemonFrenchNames)) {
+                    if (french.toLowerCase() === name.toLowerCase()) {
+                        return english;
+                    }
+                }
+            }
+            return name;
+        }
+
+        let currentLanguage = localStorage.getItem('pokemonLanguage') || 'en';
+
+        const guessInput = document.getElementById('guessInput');
+        const autocompleteMenu = document.getElementById('autocompleteMenu');
+        const guessesTable = document.getElementById('guessesTable');
+        const submitBtn = document.getElementById('submitBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const giveUpBtn = document.getElementById('giveUpBtn');
+        const resultMessage = document.getElementById('resultMessage');
+        const stats = document.getElementById('stats');
+
+        let allPokemon = [];
+        let currentPokemon = null;
+        let guesses = [];
+        let gameWon = false;
+
+        // Language switching
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('pokemonLanguage', lang);
+            
+            // Update all translation elements
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update placeholder
+            const placeholderKey = `data-placeholder-${lang}`;
+            if (guessInput.hasAttribute(placeholderKey)) {
+                guessInput.placeholder = guessInput.getAttribute(placeholderKey);
+            }
+            
+            // Update active button
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage(currentLanguage);
+            
+            // Language button click handlers
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchLanguage(btn.dataset.lang);
+                });
+            });
+        });
+
+        // Load all Pokemon data
+        async function loadPokemonList() {
+            try {
+                const response = await fetch('/api/pokemon-list');
+                allPokemon = await response.json();
+            } catch (error) {
+                console.error('Error loading Pokemon list:', error);
+            }
+        }
+
+        // Generate new game
+        async function newGame() {
+            try {
+                const response = await fetch('/api/new-game');
+                currentPokemon = await response.json();
+                guesses = [];
+                gameWon = false;
+                guessInput.value = '';
+                guessesTable.innerHTML = '';
+                resultMessage.classList.remove('show', 'success', 'error');
+                submitBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+                giveUpBtn.style.display = 'inline-block';
+                guessInput.focus();
+                updateStats();
+            } catch (error) {
+                console.error('Error starting new game:', error);
+            }
+        }
+
+        // Autocomplete
+        guessInput.addEventListener('input', (e) => {
+            const value = e.target.value.toLowerCase();
+            
+            if (value.length === 0) {
+                autocompleteMenu.classList.remove('show');
+                return;
+            }
+
+            const matches = allPokemon.filter(p => {
+                const displayName = getPokemonName(p.name).toLowerCase();
+                return displayName.startsWith(value) || p.name.toLowerCase().startsWith(value);
+            }).slice(0, 5);
+
+            if (matches.length === 0) {
+                autocompleteMenu.classList.remove('show');
+                return;
+            }
+
+            autocompleteMenu.innerHTML = matches.map(p => `
+                <div class="autocomplete-item" data-name="${p.name}">
+                    <img src="${p.sprite}" alt="${getPokemonName(p.name)}">
+                    <span>${getPokemonName(p.name)}</span>
+                </div>
+            `).join('');
+
+            autocompleteMenu.classList.add('show');
+
+            document.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    guessInput.value = getPokemonName(item.dataset.name);
+                    autocompleteMenu.classList.remove('show');
+                    submitBtn.focus();
+                });
+            });
+        });
+
+        // Close autocomplete on outside click
+        document.addEventListener('click', (e) => {
+            if (e.target !== guessInput) {
+                autocompleteMenu.classList.remove('show');
+            }
+        });
+
+        // Submit guess
+        submitBtn.addEventListener('click', async () => {
+            const guess = guessInput.value.trim();
+            
+            if (!guess) return;
+
+            // Convert French name to English for API call
+            const englishGuess = getEnglishName(guess);
+
+            try {
+                const response = await fetch('/api/guess', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ guess: englishGuess })
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    showMessage(result.error, 'error');
+                    return;
+                }
+
+                if (!response.ok) {
+                    showMessage(result.error || 'Error submitting guess', 'error');
+                    return;
+                }
+
+                console.log('Full result:', result);
+                console.log('Name:', result.name);
+                console.log('Sprite:', result.sprite);
+
+                // Check if all required fields exist
+                if (!result.height || !result.weight || !result.sprite || !result.name) {
+                    console.error('Missing fields in response:', result);
+                    showMessage('Error: Incomplete response from server', 'error');
+                    return;
+                }
+
+                // Add guess to table
+                const row = document.createElement('tr');
+                row.className = 'guess-row';
+                const displayName = getPokemonName(result.name);
+                row.innerHTML = `
+                    <td class="sprite-cell">
+                        <div class="guess-sprite-container">
+                            <img src="${result.sprite}" alt="${displayName}" class="guess-sprite">
+                            <span class="guess-name">${displayName}</span>
+                        </div>
+                    </td>
+                    <td class="${result.generation.match ? 'correct' : 'incorrect'}">
+                        ${result.generation.value}
+                    </td>
+                    <td class="${result.type1.match ? 'correct' : 'incorrect'}">
+                        ${result.type1.value}
+                    </td>
+                    <td class="${result.type2.match ? 'correct' : 'incorrect'}">
+                        ${result.type2.value || '—'}
+                    </td>
+                    <td class="${result.height.match ? 'correct' : 'incorrect'}">
+                        ${result.height.value}
+                    </td>
+                    <td class="${result.weight.match ? 'correct' : 'incorrect'}">
+                        ${result.weight.value}
+                    </td>
+                `;
+                guessesTable.insertBefore(row, guessesTable.firstChild);
+                guesses.push(guess);
+
+                if (result.correct) {
+                    gameWon = true;
+                    showWinMessage();
+                    submitBtn.style.display = 'none';
+                    nextBtn.style.display = 'inline-block';
+                    giveUpBtn.style.display = 'none';
+                } else {
+                    guessInput.value = '';
+                    guessInput.focus();
+                }
+
+                updateStats();
+            } catch (error) {
+                console.error('Error submitting guess:', error);
+                showMessage(`Error: ${error.message}`, 'error');
+            }
+        });
+
+        // Next game
+        nextBtn.addEventListener('click', newGame);
+
+        // Give up
+        giveUpBtn.addEventListener('click', async () => {
+            if (!gameWon) {
+                const displayName = getPokemonName(currentPokemon.name);
+                const gaveUpText = currentLanguage === 'fr' ? 'Le Pokémon était' : 'The Pokémon was';
+                showMessage(
+                    `${gaveUpText} <strong>${displayName}</strong>!`,
+                    'error'
+                );
+                submitBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-block';
+                giveUpBtn.style.display = 'none';
+            }
+        });
+
+        // Show win message
+        function showWinMessage() {
+            const displayName = getPokemonName(currentPokemon.name);
+            const guessText = currentLanguage === 'fr' ? 
+                (guesses.length === 1 ? 'tentative' : 'tentatives') :
+                (guesses.length === 1 ? 'try' : 'tries');
+            const guessedIn = currentLanguage === 'fr' ? 'Deviné en' : 'Guessed in';
+            
+            resultMessage.innerHTML = `
+                <div class="success-content">
+                    <div class="success-info">
+                        <h3>${displayName}</h3>
+                        <p>${guessedIn} ${guesses.length} ${guessText}!</p>
+                    </div>
+                    <div class="success-sprite">
+                        <img src="${currentPokemon.sprite}" alt="${displayName}">
+                    </div>
+                </div>
+            `;
+            resultMessage.className = 'result-message show success';
+        }
+
+        function showMessage(text, type) {
+            resultMessage.innerHTML = text;
+            resultMessage.className = `result-message show ${type}`;
+            setTimeout(() => {
+                resultMessage.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateStats() {
+            const guessLabel = currentLanguage === 'fr' ? 'Tentatives' : 'Guesses';
+            stats.textContent = gameWon 
+                ? '' 
+                : `${guessLabel}: ${guesses.length}`;
+        }
+
+        // Handle Enter key
+        guessInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !gameWon) {
+                submitBtn.click();
+            }
+        });
+
+        // Initialize
+        loadPokemonList();
+        newGame();
+    </script>
+</body>
+</html>

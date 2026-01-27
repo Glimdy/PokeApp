@@ -1,0 +1,3 @@
+# Dependencies for Pokemon Random Generator
+requests
+urllib3
