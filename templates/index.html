@@ -137,6 +137,58 @@
             box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.1);
         }
 
+        /* Hide default number input spinner arrows */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        /* Custom spinner container */
+        .count-input-wrapper {
+            display: inline-flex;
+            align-items: stretch;
+            gap: 2px;
+        }
+
+        .spinner-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .spinner-button {
+            width: 24px;
+            height: 20px;
+            padding: 0;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid rgba(0, 168, 255, 0.3);
+            border-radius: 4px;
+            color: #00a8ff;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .spinner-button:hover {
+            background: rgba(30, 30, 30, 1);
+            border-color: #00a8ff;
+            box-shadow: 0 0 8px rgba(0, 168, 255, 0.3);
+        }
+
+        .spinner-button:active {
+            transform: scale(0.95);
+        }
+
         select {
             padding: 8px 12px;
             background: rgba(42, 42, 42, 0.8);
@@ -468,7 +520,13 @@
         <div class="controls">
             <div class="control-group">
                 <label for="count" data-translate="labelCount">How many:</label>
-                <input type="number" id="count" value="3" min="1" max="50">
+                <div class="count-input-wrapper">
+                    <input type="number" id="count" value="3" min="1" max="50">
+                    <div class="spinner-buttons">
+                        <button type="button" class="spinner-button" id="incrementBtn" aria-label="Increase count">▲</button>
+                        <button type="button" class="spinner-button" id="decrementBtn" aria-label="Decrease count">▼</button>
+                    </div>
+                </div>
             </div>
             <div class="control-group">
                 <label for="generation" data-translate="labelGen">Gen:</label>
@@ -707,6 +765,31 @@
         // Generate on Enter key
         document.getElementById('count').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') generatePokemon();
+        });
+
+        // Custom spinner button handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            const countInput = document.getElementById('count');
+            const decrementBtn = document.getElementById('decrementBtn');
+            const incrementBtn = document.getElementById('incrementBtn');
+
+            if (decrementBtn && countInput) {
+                decrementBtn.addEventListener('click', () => {
+                    const currentValue = parseInt(countInput.value) || 1;
+                    const minValue = parseInt(countInput.min) || 1;
+                    const newValue = Math.max(currentValue - 1, minValue);
+                    countInput.value = newValue;
+                });
+            }
+
+            if (incrementBtn && countInput) {
+                incrementBtn.addEventListener('click', () => {
+                    const currentValue = parseInt(countInput.value) || 1;
+                    const maxValue = parseInt(countInput.max) || 50;
+                    const newValue = Math.min(currentValue + 1, maxValue);
+                    countInput.value = newValue;
+                });
+            }
         });
     </script>
 </body>
