@@ -186,6 +186,11 @@
             background: rgba(0, 168, 255, 0.1);
         }
 
+        .autocomplete-item.active {
+            background: rgba(0, 168, 255, 0.15);
+            outline: 1px solid rgba(0, 168, 255, 0.4);
+        }
+
         .autocomplete-item img {
             width: 40px;
             height: 40px;
@@ -629,6 +634,58 @@
             return name;
         }
 
+        function hideAutocomplete() {
+            autocompleteMenu.classList.remove('show');
+            activeSuggestions = [];
+            selectedSuggestionIndex = -1;
+        }
+
+        function highlightActiveSuggestion() {
+            const items = autocompleteMenu.querySelectorAll('.autocomplete-item');
+            items.forEach((item, index) => {
+                item.classList.toggle('active', index === selectedSuggestionIndex);
+            });
+
+            if (selectedSuggestionIndex >= 0 && items[selectedSuggestionIndex]) {
+                items[selectedSuggestionIndex].scrollIntoView({ block: 'nearest' });
+            }
+        }
+
+        function chooseSuggestion(index) {
+            if (index < 0 || index >= activeSuggestions.length) return;
+            guessInput.value = getPokemonName(activeSuggestions[index].name);
+            hideAutocomplete();
+            submitBtn.click();
+        }
+
+        function renderAutocomplete(matches) {
+            activeSuggestions = matches;
+            selectedSuggestionIndex = matches.length ? 0 : -1;
+
+            if (!matches.length) {
+                hideAutocomplete();
+                return;
+            }
+
+            autocompleteMenu.innerHTML = matches.map((p, index) => `
+                <div class="autocomplete-item" data-name="${p.name}" data-index="${index}">
+                    <img src="${p.sprite}" alt="${getPokemonName(p.name)}">
+                    <span>${getPokemonName(p.name)}</span>
+                </div>
+            `).join('');
+
+            autocompleteMenu.classList.add('show');
+
+            document.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const idx = Number(item.dataset.index);
+                    chooseSuggestion(idx);
+                });
+            });
+
+            highlightActiveSuggestion();
+        }
+
         let currentLanguage = localStorage.getItem('pokemonLanguage') || 'en';
 
         const guessInput = document.getElementById('guessInput');
@@ -644,6 +701,8 @@
         let currentPokemon = null;
         let guesses = [];
         let gameWon = false;
+        let activeSuggestions = [];
+        let selectedSuggestionIndex = -1;
 
         // Language switching
         function switchLanguage(lang) {
@@ -703,6 +762,7 @@
                 guesses = [];
                 gameWon = false;
                 guessInput.value = '';
+                hideAutocomplete();
                 guessesTable.innerHTML = '';
                 resultMessage.classList.remove('show', 'success', 'error');
                 submitBtn.style.display = 'inline-block';
@@ -720,7 +780,7 @@
             const value = e.target.value.toLowerCase();
             
             if (value.length === 0) {
-                autocompleteMenu.classList.remove('show');
+                hideAutocomplete();
                 return;
             }
 
@@ -729,38 +789,19 @@
                 return displayName.startsWith(value) || p.name.toLowerCase().startsWith(value);
             }).slice(0, 5);
 
-            if (matches.length === 0) {
-                autocompleteMenu.classList.remove('show');
-                return;
-            }
-
-            autocompleteMenu.innerHTML = matches.map(p => `
-                <div class="autocomplete-item" data-name="${p.name}">
-                    <img src="${p.sprite}" alt="${getPokemonName(p.name)}">
-                    <span>${getPokemonName(p.name)}</span>
-                </div>
-            `).join('');
-
-            autocompleteMenu.classList.add('show');
-
-            document.querySelectorAll('.autocomplete-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    guessInput.value = getPokemonName(item.dataset.name);
-                    autocompleteMenu.classList.remove('show');
-                    submitBtn.focus();
-                });
-            });
+            renderAutocomplete(matches);
         });
 
         // Close autocomplete on outside click
         document.addEventListener('click', (e) => {
-            if (e.target !== guessInput) {
-                autocompleteMenu.classList.remove('show');
+            if (e.target !== guessInput && !autocompleteMenu.contains(e.target)) {
+                hideAutocomplete();
             }
         });
 
         // Submit guess
         submitBtn.addEventListener('click', async () => {
+            hideAutocomplete();
             const guess = guessInput.value.trim();
             
             if (!guess) return;
@@ -916,9 +957,34 @@
                 : `${guessLabel}: ${guesses.length}`;
         }
 
-        // Handle Enter key
-        guessInput.addEventListener('keypress', (e) => {
+        // Keyboard navigation for autocomplete and Enter submissions
+        guessInput.addEventListener('keydown', (e) => {
+            const hasSuggestions = autocompleteMenu.classList.contains('show') && activeSuggestions.length > 0;
+
+            if (hasSuggestions) {
+                if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+                    e.preventDefault();
+                    selectedSuggestionIndex = (selectedSuggestionIndex + 1) % activeSuggestions.length;
+                    highlightActiveSuggestion();
+                    return;
+                }
+
+                if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+                    e.preventDefault();
+                    selectedSuggestionIndex = (selectedSuggestionIndex - 1 + activeSuggestions.length) % activeSuggestions.length;
+                    highlightActiveSuggestion();
+                    return;
+                }
+
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    chooseSuggestion(selectedSuggestionIndex >= 0 ? selectedSuggestionIndex : 0);
+                    return;
+                }
+            }
+
             if (e.key === 'Enter' && !gameWon) {
+                e.preventDefault();
                 submitBtn.click();
             }
         });
