@@ -8,6 +8,8 @@ import unicodedata
 # Import pokemon data
 sys.path.insert(0, os.path.dirname(__file__))
 from pokemon_data import POKEMON_DATA, get_pokemon_info_local
+from pokemon_evolution_stages import get_evolution_stage, get_evolution_stage_name
+from official_pokemon_data import OFFICIAL_POKEMON_DATA
 
 # Global game state
 current_game_pokemon = None
@@ -159,6 +161,12 @@ class PokemonHandler(BaseHTTPRequestHandler):
             for name in selected:
                 info = get_pokemon_info_local(name)
                 if info:
+                    # Add evolution stage info
+                    pokemon_id = info.get('id', 1)
+                    evolution_stage = get_evolution_stage(pokemon_id)
+                    evolution_stage_name = get_evolution_stage_name(evolution_stage)
+                    info['evolution_stage'] = evolution_stage
+                    info['evolution_stage_name'] = evolution_stage_name
                     results.append(info)
             
             # Send response
@@ -213,6 +221,14 @@ class PokemonHandler(BaseHTTPRequestHandler):
             if not guess_info or not target_info:
                 self.send_error_response('Error retrieving Pokemon data')
                 return
+            
+            # Get evolution stages
+            guess_pokemon_id = guess_info.get('id', 1)
+            target_pokemon_id = target_info.get('id', 1)
+            guess_evolution_stage = get_evolution_stage(guess_pokemon_id)
+            target_evolution_stage = get_evolution_stage(target_pokemon_id)
+            guess_evolution_stage_name = get_evolution_stage_name(guess_evolution_stage)
+            target_evolution_stage_name = get_evolution_stage_name(target_evolution_stage)
             
             # Detailed debug logging
             print(f'\n--- GUESS DEBUG ---', flush=True)
