@@ -427,6 +427,25 @@
             display: inline-block;
         }
 
+        .pokemon-evolution {
+            font-size: 11px;
+            color: #888;
+            margin: 6px 0;
+        }
+
+        .evolution-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(168, 85, 247, 0.05) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .pokemon-generation {
             font-size: 12px;
             color: #666;
@@ -759,7 +778,10 @@
                     <div class="pokemon-types">
                         ${p.types.length > 0 ? p.types.map(t => `<span class="type-badge"><img src="${getTypeIcon(t)}" class="type-icon" alt="${t}"/>${t}</span>`).join('') : 'No type'}
                     </div>
-                    <div class="pokemon-generation">Gen ${p.generation || 'Unknown'}</div>
+                    <div class="pokemon-evolution">
+                        <span class="evolution-badge">${p.evolution_stage_name || 'Base'}</span>
+                    </div>
+                    <div class="pokemon-generation">${p.generation || 'Unknown'}</div>
                 </div>
             `}).join('') + '</div>';
         }

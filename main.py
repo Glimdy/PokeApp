@@ -10,6 +10,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 from pokemon_data import POKEMON_DATA, get_pokemon_info_local
 from pokemon_evolution_stages import get_evolution_stage, get_evolution_stage_name
 from official_pokemon_data import OFFICIAL_POKEMON_DATA
+from pokemon_habitat import get_habitat, get_habitat_translation
+from habitat_icons import get_habitat_icon, get_habitat_emoji, get_habitat_svg
 
 # Global game state
 current_game_pokemon = None
@@ -20,6 +22,31 @@ def remove_accents(text):
         c for c in unicodedata.normalize('NFD', text)
         if unicodedata.category(c) != 'Mn'
     )
+
+def get_pokemon_by_generation(generation=None):
+    """Get list of Pokemon names filtered by generation.
+    
+    Args:
+        generation: Generation number (1-9) or None for all
+        
+    Returns:
+        List of Pokemon names
+    """
+    if generation is None:
+        return list(POKEMON_DATA.keys())
+    
+    try:
+        gen = int(generation)
+        if gen < 1 or gen > 9:
+            return list(POKEMON_DATA.keys())
+        
+        filtered = []
+        for name, data in POKEMON_DATA.items():
+            if data.get('generation') == gen:
+                filtered.append(name)
+        return filtered
+    except (ValueError, TypeError):
+        return list(POKEMON_DATA.keys())
 
 class PokemonHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -47,10 +74,29 @@ class PokemonHandler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps({'error': str(e)}).encode('utf-8'))
                 return
         
-        if path == '/api/new-game':
+        if path.startswith('/api/new-game'):
             try:
+                # Parse generation parameter from query string
+                generation = None
+                if '?' in path:
+                    query_string = path.split('?', 1)[1]
+                    for param in query_string.split('&'):
+                        if param.startswith('generation='):
+                            generation = param.split('=', 1)[1]
+                            break
+                
                 global current_game_pokemon
-                current_game_pokemon = random.choice(list(POKEMON_DATA.keys()))
+                # Get Pokemon list filtered by generation
+                available_pokemon = get_pokemon_by_generation(generation)
+                
+                if not available_pokemon:
+                    self.send_response(400)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'error': 'No Pokemon available for selected generation'}).encode('utf-8'))
+                    return
+                
+                current_game_pokemon = random.choice(available_pokemon)
                 info = get_pokemon_info_local(current_game_pokemon)
                 
                 self.send_response(200)
@@ -167,6 +213,16 @@ class PokemonHandler(BaseHTTPRequestHandler):
                     evolution_stage_name = get_evolution_stage_name(evolution_stage)
                     info['evolution_stage'] = evolution_stage
                     info['evolution_stage_name'] = evolution_stage_name
+                    
+                    # Add habitat info
+                    habitat = get_habitat(pokemon_id)
+                    habitat_name = get_habitat_translation(habitat, 'en')
+                    habitat_icon = get_habitat_icon(habitat)
+                    info['habitat'] = habitat
+                    info['habitat_name'] = habitat_name
+                    info['habitat_emoji'] = habitat_icon.get('emoji', '📍')
+                    info['habitat_svg'] = habitat_icon.get('svg', '')
+                    
                     results.append(info)
             
             # Send response
@@ -229,6 +285,14 @@ class PokemonHandler(BaseHTTPRequestHandler):
             target_evolution_stage = get_evolution_stage(target_pokemon_id)
             guess_evolution_stage_name = get_evolution_stage_name(guess_evolution_stage)
             target_evolution_stage_name = get_evolution_stage_name(target_evolution_stage)
+            
+            # Get habitats
+            guess_habitat = get_habitat(guess_pokemon_id)
+            target_habitat = get_habitat(target_pokemon_id)
+            guess_habitat_name = get_habitat_translation(guess_habitat, 'en')
+            target_habitat_name = get_habitat_translation(target_habitat, 'en')
+            guess_habitat_icon = get_habitat_icon(guess_habitat)
+            target_habitat_icon = get_habitat_icon(target_habitat)
             
             # Detailed debug logging
             print(f'\n--- GUESS DEBUG ---', flush=True)
@@ -295,6 +359,10 @@ class PokemonHandler(BaseHTTPRequestHandler):
                     'value': guess_info['generation_display'],
                     'match': generation_match
                 },
+                'evolution_stage': {
+                    'value': guess_evolution_stage_name,
+                    'match': guess_evolution_stage == target_evolution_stage
+                },
                 'type1': {
                     'value': guess_info['types'][0],
                     'match': type1_match
@@ -302,6 +370,11 @@ class PokemonHandler(BaseHTTPRequestHandler):
                 'type2': {
                     'value': type2_guess or '—',
                     'match': type2_match
+                },
+                'habitat': {
+                    'value': guess_habitat_name,
+                    'emoji': guess_habitat_icon.get('emoji', '📍'),
+                    'match': guess_habitat == target_habitat
                 },
                 'height': {
                     'value': height_value,

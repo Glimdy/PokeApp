@@ -4,12 +4,6 @@ Contains ALL 1025 Pokemon from Generations 1-9.
 Fixed to resolve sprite and type issues.
 """
 
-try:
-    from pokemon_extra_data import POKEMON_EXTRA_DATA
-except ImportError:
-    print("Warning: pokemon_extra_data not found, using empty defaults", flush=True)
-    POKEMON_EXTRA_DATA = {}
-
 POKEMON_DATA = {
     "Bulbasaur": {"id": 1, "types": ['Grass', 'Poison'], "generation": 1},
     "Ivysaur": {"id": 2, "types": ['Grass', 'Poison'], "generation": 1},
@@ -1039,23 +1033,34 @@ POKEMON_DATA = {
 }
 
 def get_pokemon_sprite_url(pokemon_id):
-    """Get sprite URL from GitHub - using home artwork for higher quality"""
-    return f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/{pokemon_id}.png"
+    """Get sprite URL from GitHub official artwork"""
+    return f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{pokemon_id}.png"
 
 def get_pokemon_info_local(name):
     """Get Pokemon info from local database"""
     if name in POKEMON_DATA:
         data = POKEMON_DATA[name]
-        extra = POKEMON_EXTRA_DATA.get(data["id"], {})
-        sprite_url = get_pokemon_sprite_url(data["id"])
+        pokemon_id = data["id"]
+        sprite_url = get_pokemon_sprite_url(pokemon_id)
+        
+        # Get height and weight from official data
+        height = None
+        weight = None
+        from official_pokemon_data import OFFICIAL_POKEMON_DATA
+        if pokemon_id in OFFICIAL_POKEMON_DATA:
+            official = OFFICIAL_POKEMON_DATA[pokemon_id]
+            height = official.get('height_m', 0)
+            weight = official.get('weight_kg', 0)
+        
         return {
             "name": name,
+            "id": pokemon_id,
             "types": data["types"],
-            "generation": data["generation"],  # Return numeric generation
-            "generation_display": f"Gen {data['generation']}",  # Display version
+            "generation": f"Generation {data['generation']}",
+            "generation_display": data['generation'],
             "sprite": sprite_url,
-            "height": extra.get("height", 0),
-            "weight": extra.get("weight", 0),
-            "color": extra.get("color", "unknown")
+            "height": height or 0,
+            "weight": weight or 0,
+            "color": "unknown"
         }
     return None

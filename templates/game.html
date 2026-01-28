@@ -18,11 +18,11 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
             min-height: 100vh;
             color: #00a8ff;
-            padding: 20px;
+            padding: 20px 40px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             position: relative;
         }
@@ -166,6 +166,26 @@
             overflow-y: auto;
             z-index: 1000;
             box-shadow: 0 8px 24px rgba(0, 168, 255, 0.2);
+            scrollbar-color: #0066cc rgba(0, 168, 255, 0.1);
+            scrollbar-width: thin;
+        }
+
+        .autocomplete-menu::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .autocomplete-menu::-webkit-scrollbar-track {
+            background: rgba(0, 168, 255, 0.05);
+            border-radius: 0 0 8px 0;
+        }
+
+        .autocomplete-menu::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
+            border-radius: 4px;
+        }
+
+        .autocomplete-menu::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #0088ff 0%, #00a8ff 100%);
         }
 
         .autocomplete-menu.show {
@@ -213,16 +233,19 @@
         th {
             background: rgba(0, 168, 255, 0.1);
             color: #00a8ff;
-            padding: 12px;
-            text-align: left;
+            padding: 14px 16px;
+            text-align: center;
             border: 1px solid rgba(0, 168, 255, 0.2);
             font-weight: 600;
         }
 
         td {
-            padding: 12px;
+            padding: 14px 16px;
             border: 1px solid rgba(0, 168, 255, 0.2);
             color: #00a8ff;
+            text-align: center;
+            overflow: visible !important;
+            white-space: nowrap;
         }
 
         .sprite-cell {
@@ -272,6 +295,40 @@
             font-weight: 600;
         }
 
+        .generation-cell {
+            width: 80px;
+            max-width: 80px;
+        }
+
+        .evolution-cell {
+            width: 100px;
+            max-width: 100px;
+        }
+
+        .habitat-cell {
+            gap: 8px;
+        }
+
+        .habitat-emoji {
+            font-size: 20px;
+            line-height: 1;
+            margin-right: 4px;
+        }
+
+        .type-icon {
+            width: 20px !important;
+            height: 20px !important;
+            display: inline !important;
+            vertical-align: middle !important;
+            margin-right: 6px !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        td img.type-icon {
+            display: inline !important;
+        }
+
         .guess-row {
             opacity: 0;
             animation: slideIn 0.3s ease forwards;
@@ -313,12 +370,20 @@
             color: #ff6b6b;
         }
 
+        .result-message.error .success-info p {
+            color: #ff6b6b;
+        }
+
         .success-content {
             text-align: center;
         }
 
         .success-sprite {
             margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
         .success-sprite img {
@@ -339,6 +404,24 @@
         .success-info p {
             font-size: 14px;
             color: #22b14c;
+        }
+
+        .result-next-btn {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .result-next-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(0, 136, 255, 0.25);
         }
 
         .button-group {
@@ -413,6 +496,49 @@
             font-size: 12px;
             margin-top: 10px;
         }
+
+        .generation-selector-container {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .generation-selector-container label {
+            color: #888;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .generation-selector {
+            padding: 8px 12px;
+            background: rgba(42, 42, 42, 0.8);
+            border: 2px solid rgba(0, 168, 255, 0.2);
+            border-radius: 8px;
+            color: #00a8ff;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .generation-selector:hover {
+            border-color: #00a8ff;
+            background: rgba(42, 42, 42, 1);
+        }
+
+        .generation-selector:focus {
+            outline: none;
+            border-color: #00a8ff;
+            background: rgba(42, 42, 42, 1);
+            box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.1);
+        }
+
+        .generation-selector option {
+            background: #1a1a2e;
+            color: #00a8ff;
+        }
     </style>
 </head>
 <body>
@@ -427,6 +553,22 @@
         </div>
 
         <div class="game-board">
+            <div class="generation-selector-container">
+                <label for="generationFilter" data-translate="selectGen">Select Generation:</label>
+                <select id="generationFilter" class="generation-selector">
+                    <option value="all" data-label-en="All Generations" data-label-fr="Toutes les générations">All Generations</option>
+                    <option value="1" data-label-en="Generation 1 (Kanto)" data-label-fr="Génération 1 (Kanto)">Generation 1 (Kanto)</option>
+                    <option value="2" data-label-en="Generation 2 (Johto)" data-label-fr="Génération 2 (Johto)">Generation 2 (Johto)</option>
+                    <option value="3" data-label-en="Generation 3 (Hoenn)" data-label-fr="Génération 3 (Hoenn)">Generation 3 (Hoenn)</option>
+                    <option value="4" data-label-en="Generation 4 (Sinnoh)" data-label-fr="Génération 4 (Sinnoh)">Generation 4 (Sinnoh)</option>
+                    <option value="5" data-label-en="Generation 5 (Unova)" data-label-fr="Génération 5 (Unova)">Generation 5 (Unova)</option>
+                    <option value="6" data-label-en="Generation 6 (Kalos)" data-label-fr="Génération 6 (Kalos)">Generation 6 (Kalos)</option>
+                    <option value="7" data-label-en="Generation 7 (Alola)" data-label-fr="Génération 7 (Alola)">Generation 7 (Alola)</option>
+                    <option value="8" data-label-en="Generation 8 (Galar)" data-label-fr="Génération 8 (Galar)">Generation 8 (Galar)</option>
+                    <option value="9" data-label-en="Generation 9 (Paldea)" data-label-fr="Génération 9 (Paldea)">Generation 9 (Paldea)</option>
+                </select>
+            </div>
+
             <div class="guess-input-container">
                 <div class="input-wrapper">
                     <input 
@@ -451,8 +593,10 @@
                         <tr>
                             <th data-translate="thSprite">Sprite</th>
                             <th data-translate="thGeneration">Generation</th>
+                            <th data-translate="thEvolutionStage">Evolution Stage</th>
                             <th data-translate="thType1">Type 1</th>
                             <th data-translate="thType2">Type 2</th>
+                            <th data-translate="thHabitat">Habitat</th>
                             <th data-translate="thHeight">Height</th>
                             <th data-translate="thWeight">Weight</th>
                         </tr>
@@ -486,10 +630,13 @@
                 nextBtn: 'Next Pokémon',
                 giveUpBtn: 'Give Up',
                 backLink: '← Back to Generator',
+                selectGen: 'Select Generation:',
                 thSprite: 'Sprite',
                 thGeneration: 'Generation',
+                thEvolutionStage: 'Evolution Stage',
                 thType1: 'Type 1',
                 thType2: 'Type 2',
+                thHabitat: 'Habitat',
                 thHeight: 'Height',
                 thWeight: 'Weight',
                 correct: 'Correct! The Pokémon was',
@@ -505,10 +652,13 @@
                 nextBtn: 'Pokémon Suivant',
                 giveUpBtn: 'Abandonner',
                 backLink: '← Retour au Générateur',
+                selectGen: 'Sélectionner la génération :',
                 thSprite: 'Sprite',
                 thGeneration: 'Génération',
+                thEvolutionStage: 'Stade d\'évolution',
                 thType1: 'Type 1',
                 thType2: 'Type 2',
+                thHabitat: 'Habitat',
                 thHeight: 'Taille',
                 thWeight: 'Poids',
                 correct: 'Correct ! Le Pokémon était',
@@ -562,8 +712,10 @@
 
         function translateGeneration(value) {
             if (currentLanguage !== 'fr') return value;
-            const match = value && value.match(/gen\s*(\d+)/i);
-            return match ? `Gén. ${match[1]}` : value;
+            // Convert to string if it's a number
+            const strValue = typeof value === 'number' ? `Gen ${value}` : value;
+            const match = strValue && strValue.match(/gen\s*(\d+)/i);
+            return match ? `Gén. ${match[1]}` : strValue;
         }
 
         function translateType(value) {
@@ -571,6 +723,31 @@
             if (!value) return value;
             const normalized = value.toString().trim().toLowerCase();
             return typeTranslations.fr[normalized] || value;
+        }
+
+        function getTypeIcon(type) {
+            // Using Pokemon type icons from a reliable CDN
+            const typeIcons = {
+                'Normal': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/normal.svg',
+                'Fire': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/fire.svg',
+                'Water': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/water.svg',
+                'Electric': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/electric.svg',
+                'Grass': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/grass.svg',
+                'Ice': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/ice.svg',
+                'Fighting': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/fighting.svg',
+                'Poison': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/poison.svg',
+                'Ground': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/ground.svg',
+                'Flying': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/flying.svg',
+                'Psychic': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/psychic.svg',
+                'Bug': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/bug.svg',
+                'Rock': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/rock.svg',
+                'Ghost': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/ghost.svg',
+                'Dragon': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/dragon.svg',
+                'Dark': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/dark.svg',
+                'Steel': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/steel.svg',
+                'Fairy': 'https://raw.githubusercontent.com/duiker101/pokemon-type-svg-icons/master/icons/fairy.svg'
+            };
+            return typeIcons[type] || '';
         }
 
         function translateHeight(value) {
@@ -594,12 +771,14 @@
         function applyTranslationsToExistingRows() {
             document.querySelectorAll('#guessesTable tr').forEach(row => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length < 6) return;
+                if (cells.length < 8) return;
 
                 const englishName = row.dataset.englishName;
                 const generation = row.dataset.generation;
+                const evolutionStage = row.dataset.evolutionStage;
                 const type1 = row.dataset.type1;
                 const type2 = row.dataset.type2;
+                const habitat = row.dataset.habitat;
                 const height = row.dataset.height;
                 const weight = row.dataset.weight;
 
@@ -611,10 +790,34 @@
                 if (nameEl) nameEl.textContent = displayName;
 
                 cells[1].textContent = translateGeneration(generation);
-                cells[2].textContent = translateType(type1);
-                cells[3].textContent = type2 === '—' ? '—' : translateType(type2);
-                cells[4].textContent = translateHeight(height);
-                cells[5].textContent = translateWeight(weight);
+                cells[2].textContent = evolutionStage || '';
+                
+                // Type cells - recreate with icons
+                cells[3].innerHTML = '';
+                if (type1) {
+                    const type1Img = document.createElement('img');
+                    type1Img.src = getTypeIcon(type1);
+                    type1Img.className = 'type-icon';
+                    type1Img.alt = type1;
+                    cells[3].appendChild(type1Img);
+                    cells[3].appendChild(document.createTextNode(translateType(type1)));
+                }
+                
+                cells[4].innerHTML = '';
+                if (type2 && type2 !== '—') {
+                    const type2Img = document.createElement('img');
+                    type2Img.src = getTypeIcon(type2);
+                    type2Img.className = 'type-icon';
+                    type2Img.alt = type2;
+                    cells[4].appendChild(type2Img);
+                    cells[4].appendChild(document.createTextNode(translateType(type2)));
+                } else {
+                    cells[4].textContent = '—';
+                }
+                
+                cells[5].textContent = habitat || 'Unknown';
+                cells[6].textContent = translateHeight(height);
+                cells[7].textContent = translateWeight(weight);
             });
         }
 
@@ -650,6 +853,10 @@
             items.forEach((item, index) => {
                 item.classList.toggle('active', index === selectedSuggestionIndex);
             });
+
+            if (selectedSuggestionIndex >= 0 && items[selectedSuggestionIndex]) {
+                items[selectedSuggestionIndex].scrollIntoView({ block: 'nearest' });
+            }
 
             if (selectedSuggestionIndex >= 0 && items[selectedSuggestionIndex]) {
                 items[selectedSuggestionIndex].scrollIntoView({ block: 'nearest' });
@@ -692,6 +899,7 @@
         }
 
         let currentLanguage = localStorage.getItem('pokemonLanguage') || 'en';
+        let selectedGeneration = localStorage.getItem('pokemonGeneration') || 'all';
 
         const guessInput = document.getElementById('guessInput');
         const autocompleteMenu = document.getElementById('autocompleteMenu');
@@ -701,6 +909,7 @@
         const giveUpBtn = document.getElementById('giveUpBtn');
         const resultMessage = document.getElementById('resultMessage');
         const stats = document.getElementById('stats');
+        const generationFilter = document.getElementById('generationFilter');
 
         let allPokemon = [];
         let currentPokemon = null;
@@ -733,8 +942,21 @@
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
 
+            // Update generation selector option labels
+            updateGenerationSelectorLabels(lang);
+
             applyTranslationsToExistingRows();
             updateStats();
+        }
+
+        // Update generation selector labels based on language
+        function updateGenerationSelectorLabels(lang) {
+            document.querySelectorAll('#generationFilter option').forEach(option => {
+                const labelKey = `data-label-${lang}`;
+                if (option.hasAttribute(labelKey)) {
+                    option.textContent = option.getAttribute(labelKey);
+                }
+            });
         }
 
         // Initialize language on page load
@@ -747,6 +969,20 @@
                     switchLanguage(btn.dataset.lang);
                 });
             });
+
+            // Generation selector change handler
+            generationFilter.addEventListener('change', (e) => {
+                selectedGeneration = e.target.value;
+                localStorage.setItem('pokemonGeneration', selectedGeneration);
+                newGame();
+            });
+
+            // Set initial generation selector value
+            generationFilter.value = selectedGeneration;
+
+            // Start new game on page load
+            newGame();
+            loadPokemonList();
         });
 
         // Load all Pokemon data
@@ -762,15 +998,18 @@
         // Generate new game
         async function newGame() {
             try {
-                const response = await fetch('/api/new-game');
+                const genParam = selectedGeneration !== 'all' ? `?generation=${selectedGeneration}` : '';
+                const response = await fetch(`/api/new-game${genParam}`);
                 currentPokemon = await response.json();
                 guesses = [];
                 gameWon = false;
                 guessInput.value = '';
+                guessInput.disabled = false;
                 hideAutocomplete();
                 guessesTable.innerHTML = '';
                 resultMessage.classList.remove('show', 'success', 'error');
                 submitBtn.style.display = 'inline-block';
+                submitBtn.disabled = false;
                 nextBtn.style.display = 'none';
                 giveUpBtn.style.display = 'inline-block';
                 guessInput.focus();
@@ -793,9 +1032,12 @@
             const matches = allPokemon.filter(p => {
                 const displayName = getPokemonName(p.name).toLowerCase();
                 const displayNameNormalized = removeAccents(displayName);
+                if (currentLanguage === 'fr') {
+                    return displayNameNormalized.startsWith(valueNormalized);
+                }
                 const nameNormalized = removeAccents(p.name.toLowerCase());
                 return displayNameNormalized.startsWith(valueNormalized) || nameNormalized.startsWith(valueNormalized);
-            }).slice(0, 5);
+            });
 
             renderAutocomplete(matches);
         });
@@ -810,11 +1052,21 @@
         // Submit guess
         submitBtn.addEventListener('click', async () => {
             hideAutocomplete();
+            if (gameWon) return;
             const guess = guessInput.value.trim();
             
             if (!guess) return;
 
             // Convert French name to English for API call
+            if (currentLanguage === 'fr') {
+                const isFrench = Object.values(pokemonFrenchNames)
+                    .some(name => name && name.toLowerCase() === guess.toLowerCase());
+                if (!isFrench) {
+                    const message = 'Veuillez entrer un nom français.';
+                    showMessage(message, 'error');
+                    return;
+                }
+            }
             const englishGuess = getEnglishName(guess);
 
             try {
@@ -850,40 +1102,67 @@
                 // Add guess to table
                 const row = document.createElement('tr');
                 row.className = 'guess-row';
+                
                 const displayName = getPokemonName(result.name);
                 const generationValue = translateGeneration(result.generation.value);
+                const evolutionStageValue = result.evolution_stage ? result.evolution_stage.value : 'MISSING';
                 const type1Value = translateType(result.type1.value);
                 const type2Value = result.type2.value === '—' ? '—' : translateType(result.type2.value);
+                
+                const type1Icon = getTypeIcon(result.type1.value);
+                const type2Icon = result.type2.value !== '—' ? getTypeIcon(result.type2.value) : '';
+                
+                const habitatValue = result.habitat ? result.habitat.value : 'Unknown';
+                const habitatEmoji = result.habitat && result.habitat.emoji ? result.habitat.emoji : '📍';
                 const heightValue = translateHeight(result.height.value);
                 const weightValue = translateWeight(result.weight.value);
-                row.innerHTML = `
+                
+                const htmlContent = `
                     <td class="sprite-cell">
                         <div class="guess-sprite-container">
                             <img src="${result.sprite}" alt="${displayName}" class="guess-sprite">
                             <span class="guess-name">${displayName}</span>
                         </div>
                     </td>
-                    <td class="${result.generation.match ? 'correct' : 'incorrect'}">
-                            ${generationValue}
-                    </td>
-                    <td class="${result.type1.match ? 'correct' : 'incorrect'}">
-                            ${type1Value}
-                    </td>
-                    <td class="${result.type2.match ? 'correct' : 'incorrect'}">
-                            ${type2Value || '—'}
-                    </td>
-                    <td class="${result.height.match ? 'correct' : 'incorrect'}">
-                            ${heightValue}
-                    </td>
-                    <td class="${result.weight.match ? 'correct' : 'incorrect'}">
-                            ${weightValue}
-                    </td>
+                    <td class="${result.generation.match ? 'correct' : 'incorrect'} generation-cell">${generationValue}</td>
+                    <td class="${result.evolution_stage && result.evolution_stage.match ? 'correct' : 'incorrect'} evolution-cell">${evolutionStageValue}</td>
+                    <td class="${result.type1.match ? 'correct' : 'incorrect'} type1-cell"></td>
+                    <td class="${result.type2.match ? 'correct' : 'incorrect'} type2-cell"></td>
+                    <td class="${result.habitat && result.habitat.match ? 'correct' : 'incorrect'} habitat-cell"><span class="habitat-emoji">${habitatEmoji}</span> ${habitatValue}</td>
+                    <td class="${result.height.match ? 'correct' : 'incorrect'}">${heightValue}</td>
+                    <td class="${result.weight.match ? 'correct' : 'incorrect'}">${weightValue}</td>
                 `;
+                row.innerHTML = htmlContent;
+                
+                // Add type icons and text using DOM manipulation
+                const type1Cell = row.querySelector('.type1-cell');
+                if (type1Icon) {
+                    const type1Img = document.createElement('img');
+                    type1Img.src = type1Icon;
+                    type1Img.className = 'type-icon';
+                    type1Img.alt = result.type1.value;
+                    type1Cell.appendChild(type1Img);
+                }
+                type1Cell.appendChild(document.createTextNode(type1Value));
+                
+                const type2Cell = row.querySelector('.type2-cell');
+                if (type2Icon && result.type2.value !== '—') {
+                    const type2Img = document.createElement('img');
+                    type2Img.src = type2Icon;
+                    type2Img.className = 'type-icon';
+                    type2Img.alt = result.type2.value;
+                    type2Cell.appendChild(type2Img);
+                }
+                type2Cell.appendChild(document.createTextNode(type2Value || '—'));
+                row.innerHTML = htmlContent;
 
                 row.dataset.englishName = result.name;
                 row.dataset.generation = result.generation.value;
+                row.dataset.evolutionStage = result.evolution_stage ? result.evolution_stage.value : '';
                 row.dataset.type1 = result.type1.value;
                 row.dataset.type2 = result.type2.value;
+                row.dataset.habitat = result.habitat ? result.habitat.value : '';
+                row.dataset.habitat_emoji = habitatEmoji;
                 row.dataset.height = result.height.value;
                 row.dataset.weight = result.weight.value;
                 guessesTable.insertBefore(row, guessesTable.firstChild);
@@ -918,13 +1197,28 @@
             if (!gameWon) {
                 const displayName = getPokemonName(currentPokemon.name);
                 const gaveUpText = currentLanguage === 'fr' ? 'Le Pokémon était' : 'The Pokémon was';
-                showMessage(
-                    `${gaveUpText} <strong>${displayName}</strong>!`,
-                    'error'
-                );
+                const nextLabel = currentLanguage === 'fr' ? 'Nouvelle partie' : 'Next Guess';
+                resultMessage.innerHTML = `
+                    <div class="success-content">
+                        <div class="success-info">
+                            <h3>${displayName}</h3>
+                            <p>${gaveUpText} ${displayName}!</p>
+                        </div>
+                        <div class="success-sprite">
+                            <img src="${currentPokemon.sprite}" alt="${displayName}">
+                            <button class="result-next-btn" type="button">${nextLabel}</button>
+                        </div>
+                    </div>
+                `;
+                resultMessage.className = 'result-message show error';
+                gameWon = true;
+                guessInput.disabled = true;
                 submitBtn.style.display = 'none';
-                nextBtn.style.display = 'inline-block';
+                submitBtn.disabled = true;
+                nextBtn.style.display = 'none';
                 giveUpBtn.style.display = 'none';
+                const nextButton = resultMessage.querySelector('.result-next-btn');
+                if (nextButton) nextButton.addEventListener('click', newGame);
             }
         });
 
@@ -935,6 +1229,7 @@
                 (guesses.length === 1 ? 'tentative' : 'tentatives') :
                 (guesses.length === 1 ? 'try' : 'tries');
             const guessedIn = currentLanguage === 'fr' ? 'Deviné en' : 'Guessed in';
+            const nextLabel = currentLanguage === 'fr' ? 'Nouvelle partie' : 'Next Guess';
             
             resultMessage.innerHTML = `
                 <div class="success-content">
@@ -944,10 +1239,13 @@
                     </div>
                     <div class="success-sprite">
                         <img src="${currentPokemon.sprite}" alt="${displayName}">
+                        <button class="result-next-btn" type="button">${nextLabel}</button>
                     </div>
                 </div>
             `;
             resultMessage.className = 'result-message show success';
+            const nextButton = resultMessage.querySelector('.result-next-btn');
+            if (nextButton) nextButton.addEventListener('click', newGame);
         }
 
         function showMessage(text, type) {
@@ -996,10 +1294,6 @@
                 submitBtn.click();
             }
         });
-
-        // Initialize
-        loadPokemonList();
-        newGame();
     </script>
 </body>
 </html>
