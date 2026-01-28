@@ -620,7 +620,41 @@
             }
         };
 
+        // Type translations
+        const typeTranslations = {
+            fr: {
+                Normal: 'Normal',
+                Fire: 'Feu',
+                Water: 'Eau',
+                Electric: 'Électrik',
+                Grass: 'Plante',
+                Ice: 'Glace',
+                Fighting: 'Combat',
+                Poison: 'Poison',
+                Ground: 'Sol',
+                Flying: 'Vol',
+                Psychic: 'Psy',
+                Bug: 'Insecte',
+                Rock: 'Roche',
+                Ghost: 'Spectre',
+                Dragon: 'Dragon',
+                Dark: 'Ténèbres',
+                Steel: 'Acier',
+                Fairy: 'Fée'
+            }
+        };
+
+        // Evolution stage translations
+        const evolutionTranslations = {
+            fr: {
+                'Base': 'Base',
+                'Stage 1': 'Stade 1',
+                'Stage 2': 'Stade 2'
+            }
+        };
+
         let currentLanguage = localStorage.getItem('pokemonLanguage') || 'en';
+        let currentPokemonData = []; // Store current Pokemon data for re-rendering
 
         // Language switching
         function switchLanguage(lang) {
@@ -639,6 +673,11 @@
             document.querySelectorAll('.language-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
+
+            // Re-render existing Pokemon with new language
+            if (currentPokemonData.length > 0) {
+                renderResults(currentPokemonData);
+            }
         }
 
         // Initialize language on page load
@@ -659,6 +698,30 @@
                 return pokemonFrenchNames[englishName];
             }
             return englishName;
+        }
+
+        // Function to translate type names
+        function translateType(type) {
+            if (currentLanguage === 'fr' && typeTranslations.fr[type]) {
+                return typeTranslations.fr[type];
+            }
+            return type;
+        }
+
+        // Function to translate evolution stage
+        function translateEvolution(stage) {
+            if (currentLanguage === 'fr' && evolutionTranslations.fr[stage]) {
+                return evolutionTranslations.fr[stage];
+            }
+            return stage;
+        }
+
+        // Function to translate generation
+        function translateGeneration(generation) {
+            if (currentLanguage === 'fr' && generation) {
+                return generation.replace('Generation', 'Génération');
+            }
+            return generation;
         }
 
         function getTypeIcon(type) {
@@ -767,6 +830,9 @@
                 return;
             }
 
+            // Store the current data for re-rendering on language change
+            currentPokemonData = pokemon;
+
             resultsDiv.innerHTML = '<div class="results">' + pokemon.map(p => {
                 const displayName = getPokemonName(p.name);
                 return `
@@ -776,12 +842,12 @@
                     </div>
                     <div class="pokemon-name">${displayName}</div>
                     <div class="pokemon-types">
-                        ${p.types.length > 0 ? p.types.map(t => `<span class="type-badge"><img src="${getTypeIcon(t)}" class="type-icon" alt="${t}"/>${t}</span>`).join('') : 'No type'}
+                        ${p.types.length > 0 ? p.types.map(t => `<span class="type-badge"><img src="${getTypeIcon(t)}" class="type-icon" alt="${t}"/>${translateType(t)}</span>`).join('') : 'No type'}
                     </div>
                     <div class="pokemon-evolution">
-                        <span class="evolution-badge">${p.evolution_stage_name || 'Base'}</span>
+                        <span class="evolution-badge">${translateEvolution(p.evolution_stage_name || 'Base')}</span>
                     </div>
-                    <div class="pokemon-generation">${p.generation || 'Unknown'}</div>
+                    <div class="pokemon-generation">${translateGeneration(p.generation || 'Unknown')}</div>
                 </div>
             `}).join('') + '</div>';
         }
