@@ -1,0 +1,151 @@
+Bulbasaur - Base
+Ivysaur - Phase 1
+Venusaur - Phase 2
+Charmander - Base
+Charmeleon - Phase 1
+Charizard - Phase 2
+Squirtle - Base
+Wartortle - Phase 1
+Blastoise - Phase 2
+Caterpie - Base
+Metapod - Phase 1
+Butterfree - Phase 2
+Weedle - Base
+Kakuna - Phase 1
+Beedrill - Phase 2
+Pidgey - Base
+Pidgeotto - Phase 1
+Pidgeot - Phase 2
+Rattata - Base
+Raticate - Phase 1
+Spearow - Base
+Fearow - Phase 1
+Ekans - Base
+Arbok - Phase 1
+Pikachu - Phase 1
+Raichu - Phase 2
+Sandshrew - Base
+Sandslash - Phase 1
+Nidoran♀ - Base
+Nidorina - Phase 1
+Nidoqueen - Phase 2
+Nidoran♂ - Base
+Nidorino - Phase 1
+Nidoking - Phase 2
+Clefairy - Phase 1
+Clefable - Phase 2
+Vulpix - Base
+Ninetales - Phase 1
+Jigglypuff - Phase 1
+Wigglytuff - Phase 2
+Zubat - Base
+Golbat - Phase 1
+Oddish - Base
+Gloom - Phase 1
+Vileplume - Phase 2
+Paras - Base
+Parasect - Phase 1
+Venonat - Base
+Venomoth - Phase 1
+Diglett - Base
+Dugtrio - Phase 1
+Meowth - Base
+Persian - Phase 1
+Psyduck - Base
+Golduck - Phase 1
+Mankey - Base
+Primeape - Phase 1
+Growlithe - Base
+Arcanine - Phase 1
+Poliwag - Base
+Poliwhirl - Phase 1
+Poliwrath - Phase 2
+Abra - Base
+Kadabra - Phase 1
+Alakazam - Phase 2
+Machop - Base
+Machoke - Phase 1
+Machamp - Phase 2
+Bellsprout - Base
+Weepinbell - Phase 1
+Victreebel - Phase 2
+Tentacool - Base
+Tentacruel - Phase 1
+Geodude - Base
+Graveler - Phase 1
+Golem - Phase 2
+Ponyta - Base
+Rapidash - Phase 1
+Slowpoke - Base
+Slowbro - Phase 1
+Magnemite - Base
+Magneton - Phase 1
+Farfetch'd - Base
+Doduo - Base
+Dodrio - Phase 1
+Seel - Base
+Dewgong - Phase 1
+Grimer - Base
+Muk - Phase 1
+Shellder - Base
+Cloyster - Phase 1
+Gastly - Base
+Haunter - Phase 1
+Gengar - Phase 2
+Onix - Base
+Drowzee - Base
+Hypno - Phase 1
+Krabby - Base
+Kingler - Phase 1
+Voltorb - Base
+Electrode - Phase 1
+Exeggcute - Base
+Exeggutor - Phase 1
+Cubone - Base
+Marowak - Phase 1
+Hitmonlee - Base
+Hitmonchan - Base
+Lickitung - Base
+Koffing - Base
+Weezing - Phase 1
+Rhyhorn - Base
+Rhydon - Phase 1
+Chansey - Base
+Tangela - Base
+Kangaskhan - Base
+Horsea - Base
+Seadra - Phase 1
+Goldeen - Base
+Seaking - Phase 1
+Staryu - Base
+Starmie - Phase 1
+Mr. Mime - Base
+Scyther - Base
+Jynx - Base
+Electabuzz - Base
+Magmar - Base
+Pinsir - Base
+Tauros - Base
+Magikarp - Base
+Gyarados - Phase 1
+Lapras - Base
+Ditto - Base
+Eevee - Base
+Vaporeon - Phase 1
+Jolteon - Phase 1
+Flareon - Phase 1
+Porygon - Base
+Omanyte - Base
+Omastar - Phase 1
+Kabuto - Base
+Kabutops - Phase 1
+Aerodactyl - Base
+Snorlax - Base
+Articuno - Base
+Zapdos - Base
+Moltres - Base
+Dratini - Base
+Dragonair - Phase 1
+Dragonite - Phase 2
+Mewtwo - Base
+Mew - Base

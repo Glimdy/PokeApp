@@ -1,0 +1,72 @@
+Chespin - Base
+Quilladin - Phase 1
+Chesnaught - Phase 2
+Fennekin - Base
+Braixen - Phase 1
+Delphox - Phase 2
+Froakie - Base
+Frogadier - Phase 1
+Greninja - Phase 2
+Bunnelby - Base
+Diggersby - Phase 1
+Fletchling - Base
+Fletchinder - Phase 1
+Talonflame - Phase 2
+Scatterbug - Base
+Spewpa - Phase 1
+Vivillon - Phase 2
+Litleo - Base
+Pyroar - Phase 1
+Flabébé - Base
+Floette - Phase 1
+Florges - Phase 2
+Skiddo - Base
+Gogoat - Phase 1
+Pancham - Base
+Pangoro - Phase 1
+Furfrou - Base
+Espurr - Base
+Meowstic - Phase 1
+Honedge - Base
+Doublade - Phase 1
+Aegislash - Phase 2
+Spritzee - Base
+Aromatisse - Phase 1
+Swirlix - Base
+Slurpuff - Phase 1
+Inkay - Base
+Malamar - Phase 1
+Binacle - Base
+Barbaracle - Phase 1
+Skrelp - Base
+Dragalge - Phase 1
+Clauncher - Base
+Clawitzer - Phase 1
+Helioptile - Base
+Heliolisk - Phase 1
+Tyrunt - Base
+Tyrantrum - Phase 1
+Amaura - Base
+Aurorus - Phase 1
+Sylveon - Phase 2
+Hawlucha - Base
+Dedenne - Base
+Carbink - Base
+Goomy - Base
+Sliggoo - Phase 1
+Goodra - Phase 2
+Klefki - Base
+Phantump - Base
+Trevenant - Phase 1
+Pumpkaboo - Base
+Gourgeist - Phase 1
+Bergmite - Base
+Avalugg - Phase 1
+Noibat - Base
+Noivern - Phase 1
+Xerneas - Base
+Yveltal - Base
+Zygarde - Base
+Diancie - Base
+Hoopa - Base
+Volcanion - Base

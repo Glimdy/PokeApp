@@ -1,0 +1,88 @@
+Rowlet - Base
+Dartrix - Phase 1
+Decidueye - Phase 2
+Litten - Base
+Torracat - Phase 1
+Incineroar - Phase 2
+Popplio - Base
+Brionne - Phase 1
+Primarina - Phase 2
+Pikipek - Base
+Trumbeak - Phase 1
+Toucannon - Phase 2
+Yungoos - Base
+Gumshoos - Phase 1
+Grubbin - Base
+Charjabug - Phase 1
+Vikavolt - Phase 2
+Crabrawler - Base
+Crabominable - Phase 1
+Oricorio - Base
+Cutiefly - Base
+Ribombee - Phase 1
+Rockruff - Base
+Lycanroc - Phase 1
+Wishiwashi - Base
+Mareanie - Base
+Toxapex - Phase 1
+Mudbray - Base
+Mudsdale - Phase 1
+Dewpider - Base
+Araquanid - Phase 1
+Fomantis - Base
+Lurantis - Phase 1
+Morelull - Base
+Shiinotic - Phase 1
+Salandit - Base
+Salazzle - Phase 1
+Stufful - Base
+Bewear - Phase 1
+Bounsweet - Base
+Steenee - Phase 1
+Tsareena - Phase 2
+Comfey - Base
+Oranguru - Base
+Passimian - Base
+Wimpod - Base
+Golisopod - Phase 1
+Sandygast - Base
+Palossand - Phase 1
+Pyukumuku - Base
+Type: Null - Base
+Silvally - Phase 1
+Minior - Base
+Komala - Base
+Turtonator - Base
+Togedemaru - Base
+Mimikyu - Base
+Bruxish - Base
+Drampa - Base
+Dhelmise - Base
+Jangmo-o - Base
+Hakamo-o - Phase 1
+Kommo-o - Phase 2
+Tapu Koko - Base
+Tapu Lele - Base
+Tapu Bulu - Base
+Tapu Fini - Base
+Cosmog - Base
+Cosmoem - Phase 1
+Solgaleo - Phase 2
+Lunala - Phase 2
+Nihilego - Base
+Buzzwole - Base
+Pheromosa - Base
+Xurkitree - Base
+Celesteela - Base
+Kartana - Base
+Guzzlord - Base
+Necrozma - Base
+Magearna - Base
+Marshadow - Base
+Poipole - Base
+Naganadel - Phase 1
+Stakataka - Base
+Blacephalon - Base
+Zeraora - Base
+Meltan - Base
+Melmetal - Phase 1

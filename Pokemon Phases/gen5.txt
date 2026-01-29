@@ -1,0 +1,156 @@
+Victini - Base
+Snivy - Base
+Servine - Phase 1
+Serperior - Phase 2
+Tepig - Base
+Pignite - Phase 1
+Emboar - Phase 2
+Oshawott - Base
+Dewott - Phase 1
+Samurott - Phase 2
+Patrat - Base
+Watchog - Phase 1
+Lillipup - Base
+Herdier - Phase 1
+Stoutland - Phase 2
+Purrloin - Base
+Liepard - Phase 1
+Pansage - Base
+Simisage - Phase 1
+Pansear - Base
+Simisear - Phase 1
+Panpour - Base
+Simipour - Phase 1
+Munna - Base
+Musharna - Phase 1
+Pidove - Base
+Tranquill - Phase 1
+Unfezant - Phase 2
+Blitzle - Base
+Zebstrika - Phase 1
+Roggenrola - Base
+Boldore - Phase 1
+Gigalith - Phase 2
+Woobat - Base
+Swoobat - Phase 1
+Drilbur - Base
+Excadrill - Phase 1
+Audino - Base
+Timburr - Base
+Gurdurr - Phase 1
+Conkeldurr - Phase 2
+Tympole - Base
+Palpitoad - Phase 1
+Seismitoad - Phase 2
+Throh - Base
+Sawk - Base
+Sewaddle - Base
+Swadloon - Phase 1
+Leavanny - Phase 2
+Venipede - Base
+Whirlipede - Phase 1
+Scolipede - Phase 2
+Cottonee - Base
+Whimsicott - Phase 1
+Petilil - Base
+Lilligant - Phase 1
+Basculin - Base
+Sandile - Base
+Krokorok - Phase 1
+Krookodile - Phase 2
+Darumaka - Base
+Darmanitan - Phase 1
+Maractus - Base
+Dwebble - Base
+Crustle - Phase 1
+Scraggy - Base
+Scrafty - Phase 1
+Sigilyph - Base
+Yamask - Base
+Cofagrigus - Phase 1
+Tirtouga - Base
+Carracosta - Phase 1
+Archen - Base
+Archeops - Phase 1
+Trubbish - Base
+Garbodor - Phase 1
+Zorua - Base
+Zoroark - Phase 1
+Minccino - Base
+Cinccino - Phase 1
+Gothita - Base
+Gothorita - Phase 1
+Gothitelle - Phase 2
+Solosis - Base
+Duosion - Phase 1
+Reuniclus - Phase 2
+Ducklett - Base
+Swanna - Phase 1
+Vanillite - Base
+Vanillish - Phase 1
+Vanilluxe - Phase 2
+Deerling - Base
+Sawsbuck - Phase 1
+Emolga - Base
+Karrablast - Base
+Escavalier - Phase 1
+Foongus - Base
+Amoonguss - Phase 1
+Frillish - Base
+Jellicent - Phase 1
+Alomomola - Base
+Joltik - Base
+Galvantula - Phase 1
+Ferroseed - Base
+Ferrothorn - Phase 1
+Klink - Base
+Klang - Phase 1
+Klinklang - Phase 2
+Tynamo - Base
+Eelektrik - Phase 1
+Eelektross - Phase 2
+Elgyem - Base
+Beheeyem - Phase 1
+Litwick - Base
+Lampent - Phase 1
+Chandelure - Phase 2
+Axew - Base
+Fraxure - Phase 1
+Haxorus - Phase 2
+Cubchoo - Base
+Beartic - Phase 1
+Cryogonal - Base
+Shelmet - Base
+Accelgor - Phase 1
+Stunfisk - Base
+Mienfoo - Base
+Mienshao - Phase 1
+Druddigon - Base
+Golett - Base
+Golurk - Phase 1
+Pawniard - Base
+Bisharp - Phase 1
+Bouffalant - Base
+Rufflet - Base
+Braviary - Phase 1
+Vullaby - Base
+Mandibuzz - Phase 1
+Heatmor - Base
+Durant - Base
+Deino - Base
+Zweilous - Phase 1
+Hydreigon - Phase 2
+Larvesta - Base
+Volcarona - Phase 1
+Cobalion - Base
+Terrakion - Base
+Virizion - Base
+Tornadus - Base
+Thundurus - Base
+Reshiram - Base
+Zekrom - Base
+Landorus - Base
+Kyurem - Base
+Keldeo - Base
+Meloetta - Base
+Genesect - Base

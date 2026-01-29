@@ -1,0 +1,96 @@
+Grookey - Base
+Thwackey - Phase 1
+Rillaboom - Phase 2
+Scorbunny - Base
+Raboot - Phase 1
+Cinderace - Phase 2
+Sobble - Base
+Drizzile - Phase 1
+Inteleon - Phase 2
+Skwovet - Base
+Greedent - Phase 1
+Rookidee - Base
+Corvisquire - Phase 1
+Corviknight - Phase 2
+Blipbug - Base
+Dottler - Phase 1
+Orbeetle - Phase 2
+Nickit - Base
+Thievul - Phase 1
+Gossifleur - Base
+Eldegoss - Phase 1
+Wooloo - Base
+Dubwool - Phase 1
+Chewtle - Base
+Drednaw - Phase 1
+Yamper - Base
+Boltund - Phase 1
+Rolycoly - Base
+Carkol - Phase 1
+Coalossal - Phase 2
+Applin - Base
+Flapple - Phase 1
+Appletun - Phase 1
+Silicobra - Base
+Sandaconda - Phase 1
+Cramorant - Base
+Arrokuda - Base
+Barraskewda - Phase 1
+Toxel - Base
+Toxtricity - Phase 1
+Sizzlipede - Base
+Centiskorch - Phase 1
+Clobbopus - Base
+Grapploct - Phase 1
+Sinistea - Base
+Polteageist - Phase 1
+Hatenna - Base
+Hattrem - Phase 1
+Hatterene - Phase 2
+Impidimp - Base
+Morgrem - Phase 1
+Grimmsnarl - Phase 2
+Obstagoon - Phase 2
+Perrserker - Phase 2
+Cursola - Phase 2
+Sirfetch'd - Phase 2
+Mr. Rime - Phase 2
+Runerigus - Phase 2
+Milcery - Base
+Alcremie - Phase 1
+Falinks - Base
+Pincurchin - Base
+Snom - Base
+Frosmoth - Phase 1
+Stonjourner - Base
+Eiscue - Base
+Indeedee - Base
+Morpeko - Base
+Cufant - Base
+Copperajah - Phase 1
+Dracozolt - Base
+Arctozolt - Base
+Dracovish - Base
+Arctovish - Base
+Duraludon - Base
+Dreepy - Base
+Drakloak - Phase 1
+Dragapult - Phase 2
+Zacian - Base
+Zamazenta - Base
+Eternatus - Base
+Kubfu - Base
+Urshifu - Phase 1
+Zarude - Base
+Regieleki - Base
+Regidrago - Base
+Glastrier - Base
+Spectrier - Base
+Calyrex - Base
+Wyrdeer - Phase 2
+Kleavor - Phase 2
+Ursaluna - Phase 2
+Basculegion - Phase 2
+Sneasler - Phase 2
+Overqwil - Phase 2
+Enamorus - Base

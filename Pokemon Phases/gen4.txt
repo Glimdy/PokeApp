@@ -1,0 +1,107 @@
+Turtwig - Base
+Grotle - Phase 1
+Torterra - Phase 2
+Chimchar - Base
+Monferno - Phase 1
+Infernape - Phase 2
+Piplup - Base
+Prinplup - Phase 1
+Empoleon - Phase 2
+Starly - Base
+Staravia - Phase 1
+Staraptor - Phase 2
+Bidoof - Base
+Bibarel - Phase 1
+Kricketot - Base
+Kricketune - Phase 1
+Shinx - Base
+Luxio - Phase 1
+Luxray - Phase 2
+Budew - Base
+Roserade - Phase 2
+Cranidos - Base
+Rampardos - Phase 1
+Shieldon - Base
+Bastiodon - Phase 1
+Burmy - Base
+Wormadam - Phase 1
+Mothim - Phase 1
+Combee - Base
+Vespiquen - Phase 1
+Pachirisu - Base
+Buizel - Base
+Floatzel - Phase 1
+Cherubi - Base
+Cherrim - Phase 1
+Shellos - Base
+Gastrodon - Phase 1
+Ambipom - Phase 2
+Drifloon - Base
+Drifblim - Phase 1
+Buneary - Base
+Lopunny - Phase 1
+Mismagius - Phase 2
+Honchkrow - Phase 2
+Glameow - Base
+Purugly - Phase 1
+Chingling - Base
+Stunky - Base
+Skuntank - Phase 1
+Bronzor - Base
+Bronzong - Phase 1
+Bonsly - Base
+Mime Jr. - Base
+Happiny - Base
+Chatot - Base
+Spiritomb - Base
+Gible - Base
+Gabite - Phase 1
+Garchomp - Phase 2
+Munchlax - Base
+Riolu - Base
+Lucario - Phase 1
+Hippopotas - Base
+Hippowdon - Phase 1
+Skorupi - Base
+Drapion - Phase 1
+Croagunk - Base
+Toxicroak - Phase 1
+Carnivine - Base
+Finneon - Base
+Lumineon - Phase 1
+Mantyke - Base
+Snover - Base
+Abomasnow - Phase 1
+Weavile - Phase 1
+Magnezone - Phase 2
+Lickilicky - Phase 1
+Rhyperior - Phase 2
+Tangrowth - Phase 1
+Electivire - Phase 2
+Magmortar - Phase 2
+Togekiss - Phase 2
+Yanmega - Phase 1
+Leafeon - Phase 1
+Glaceon - Phase 1
+Gliscor - Phase 1
+Mamoswine - Phase 2
+Porygon-Z - Phase 2
+Gallade - Phase 2
+Probopass - Phase 1
+Dusknoir - Phase 2
+Froslass - Phase 1
+Rotom - Base
+Uxie - Base
+Mesprit - Base
+Azelf - Base
+Dialga - Base
+Palkia - Base
+Heatran - Base
+Regigigas - Base
+Giratina - Base
+Cresselia - Base
+Phione - Base
+Manaphy - Base
+Darkrai - Base
+Shaymin - Base
+Arceus - Base

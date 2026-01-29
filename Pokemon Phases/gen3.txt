@@ -1,0 +1,135 @@
+Treecko - Base
+Grovyle - Phase 1
+Sceptile - Phase 2
+Torchic - Base
+Combusken - Phase 1
+Blaziken - Phase 2
+Mudkip - Base
+Marshtomp - Phase 1
+Swampert - Phase 2
+Poochyena - Base
+Mightyena - Phase 1
+Zigzagoon - Base
+Linoone - Phase 1
+Wurmple - Base
+Silcoon - Phase 1
+Beautifly - Phase 2
+Cascoon - Phase 1
+Dustox - Phase 2
+Lotad - Base
+Lombre - Phase 1
+Ludicolo - Phase 2
+Seedot - Base
+Nuzleaf - Phase 1
+Shiftry - Phase 2
+Taillow - Base
+Swellow - Phase 1
+Wingull - Base
+Pelipper - Phase 1
+Ralts - Base
+Kirlia - Phase 1
+Gardevoir - Phase 2
+Surskit - Base
+Masquerain - Phase 1
+Shroomish - Base
+Breloom - Phase 1
+Slakoth - Base
+Vigoroth - Phase 1
+Slaking - Phase 2
+Nincada - Base
+Ninjask - Phase 1
+Shedinja - Phase 1
+Whismur - Base
+Loudred - Phase 1
+Exploud - Phase 2
+Makuhita - Base
+Hariyama - Phase 1
+Azurill - Base
+Nosepass - Base
+Skitty - Base
+Delcatty - Phase 1
+Sableye - Base
+Mawile - Base
+Aron - Base
+Lairon - Phase 1
+Aggron - Phase 2
+Meditite - Base
+Medicham - Phase 1
+Electrike - Base
+Manectric - Phase 1
+Plusle - Base
+Minun - Base
+Volbeat - Base
+Illumise - Base
+Roselia - Phase 1
+Gulpin - Base
+Swalot - Phase 1
+Carvanha - Base
+Sharpedo - Phase 1
+Wailmer - Base
+Wailord - Phase 1
+Numel - Base
+Camerupt - Phase 1
+Torkoal - Base
+Spoink - Base
+Grumpig - Phase 1
+Spinda - Base
+Trapinch - Base
+Vibrava - Phase 1
+Flygon - Phase 2
+Cacnea - Base
+Cacturne - Phase 1
+Swablu - Base
+Altaria - Phase 1
+Zangoose - Base
+Seviper - Base
+Lunatone - Base
+Solrock - Base
+Barboach - Base
+Whiscash - Phase 1
+Corphish - Base
+Crawdaunt - Phase 1
+Baltoy - Base
+Claydol - Phase 1
+Lileep - Base
+Cradily - Phase 1
+Anorith - Base
+Armaldo - Phase 1
+Feebas - Base
+Milotic - Phase 1
+Castform - Base
+Kecleon - Base
+Shuppet - Base
+Banette - Phase 1
+Duskull - Base
+Dusclops - Phase 1
+Tropius - Base
+Chimecho - Phase 1
+Absol - Base
+Wynaut - Base
+Snorunt - Base
+Glalie - Phase 1
+Spheal - Base
+Sealeo - Phase 1
+Walrein - Phase 2
+Clamperl - Base
+Huntail - Phase 1
+Gorebyss - Phase 1
+Relicanth - Base
+Luvdisc - Base
+Bagon - Base
+Shelgon - Phase 1
+Salamence - Phase 2
+Beldum - Base
+Metang - Phase 1
+Metagross - Phase 2
+Regirock - Base
+Regice - Base
+Registeel - Base
+Latias - Base
+Latios - Base
+Kyogre - Base
+Groudon - Base
+Rayquaza - Base
+Jirachi - Base
+Deoxys - Base

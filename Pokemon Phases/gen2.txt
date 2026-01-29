@@ -1,0 +1,100 @@
+Chikorita - Base
+Bayleef - Phase 1
+Meganium - Phase 2
+Cyndaquil - Base
+Quilava - Phase 1
+Typhlosion - Phase 2
+Totodile - Base
+Croconaw - Phase 1
+Feraligatr - Phase 2
+Sentret - Base
+Furret - Phase 1
+Hoothoot - Base
+Noctowl - Phase 1
+Ledyba - Base
+Ledian - Phase 1
+Spinarak - Base
+Ariados - Phase 1
+Crobat - Phase 2
+Chinchou - Base
+Lanturn - Phase 1
+Pichu - Base
+Cleffa - Base
+Igglybuff - Base
+Togepi - Base
+Togetic - Phase 1
+Natu - Base
+Xatu - Phase 1
+Mareep - Base
+Flaaffy - Phase 1
+Ampharos - Phase 2
+Bellossom - Phase 2
+Marill - Phase 1
+Azumarill - Phase 2
+Sudowoodo - Base
+Politoed - Phase 2
+Hoppip - Base
+Skiploom - Phase 1
+Jumpluff - Phase 2
+Aipom - Base
+Sunkern - Base
+Sunflora - Phase 1
+Yanma - Base
+Wooper - Base
+Quagsire - Phase 1
+Espeon - Phase 2
+Umbreon - Phase 2
+Murkrow - Base
+Slowking - Phase 2
+Misdreavus - Base
+Unown - Base
+Wobbuffet - Base
+Girafarig - Base
+Pineco - Base
+Forretress - Phase 1
+Dunsparce - Base
+Gligar - Base
+Steelix - Phase 2
+Snubbull - Base
+Granbull - Phase 1
+Qwilfish - Base
+Scizor - Phase 2
+Shuckle - Base
+Heracross - Base
+Sneasel - Base
+Teddiursa - Base
+Ursaring - Phase 1
+Slugma - Base
+Magcargo - Phase 1
+Swinub - Base
+Piloswine - Phase 1
+Corsola - Base
+Remoraid - Base
+Octillery - Phase 1
+Delibird - Base
+Mantine - Base
+Skarmory - Base
+Houndour - Base
+Houndoom - Phase 1
+Kingdra - Phase 2
+Phanpy - Base
+Donphan - Phase 1
+Porygon2 - Phase 1
+Stantler - Base
+Smeargle - Base
+Tyrogue - Base
+Hitmontop - Phase 1
+Smoochum - Base
+Elekid - Base
+Magby - Base
+Miltank - Base
+Blissey - Phase 2
+Raikou - Base
+Entei - Base
+Suicune - Base
+Larvitar - Base
+Pupitar - Phase 1
+Tyranitar - Phase 2
+Lugia - Base
+Ho-Oh - Base
+Celebi - Base
